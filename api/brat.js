@@ -1,13 +1,7 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-    const { key, text } = req.query;
-
-    const MY_API_KEY = process.env.MY_API_KEY; 
-
-    if (key !== MY_API_KEY) {
-        return res.status(403).json({ error: "API key salah!" });
-    }
+    const { text } = req.query;
 
     if (!text) {
         return res.status(400).json({ error: "Parameter 'text' wajib diisi" });
@@ -20,8 +14,9 @@ export default async function handler(req, res) {
         );
 
         res.setHeader("Content-Type", "image/png");
-        res.send(response.data);
+        res.send(Buffer.from(response.data, "binary"));
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: "Gagal mengambil gambar" });
     }
 }
