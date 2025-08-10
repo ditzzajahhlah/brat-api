@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         res.setHeader("Content-Type", "image/png");
         res.send(Buffer.from(response.data, "binary"));
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         res.status(500).json({ error: "Gagal mengambil gambar" });
     }
 }
